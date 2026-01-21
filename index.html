@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Anlyser</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Merienda", cursive;
+            padding: 30px;
+            background: #2A7B9B;
+            background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+        }
+        .container {
+            width: 55vw;
+            margin: 5vw auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        label {
+            font-size: 1.1em;
+            display: block;
+            padding-top: 15px;
+        }
+
+        input[type='number'] {
+            width: 95%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 2px solid #ccc;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, purple, cyan);
+            color: white;
+            border: none;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background:#afd0bd;
+        }
+
+        .result {
+            margin-top: 25px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Heart Disease Analyser</h1>
+    <form action="/predict" method="POST">
+        <label>Age:</label>
+        <input type="number" step="any" name="age" required>
+
+        <label>Chest Pain Type:</label>
+        <input type="number" step="any" name="cp" required>
+
+        <label>Resting Blood Pressure:</label>
+        <input type="number" step="any" name="trestbps" required>
+
+        <label>Cholesterol Level:</label>
+        <input type="number" step="any" name="chol" required>
+
+        <label>Maximum Heart Rate Achieved:</label>
+        <input type="number" step="any" name="thalach" required>
+
+    <button type="submit">Predict</button>
+    
+</form>
+  {% if result %}
+    <div class="result">
+      <p>Predicted : {{ result.predicted_class }}</p>
+      <p>Prediction Probabilities:</p>
+      <ul>
+        {% for class, prob in result.predicted_probability.items() %}
+          <li>{{ class }}: {{ prob | round(4) }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
